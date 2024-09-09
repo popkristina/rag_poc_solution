@@ -1,0 +1,16 @@
+import pandas as pd
+
+######## READ NEW DATA TO UPDATE VECTOR DATABASE WITH ########
+
+
+
+
+########## CONNECTION TO EXISTING VECTOR DATABASE ############
+
+
+
+
+###### UPDATE VECTOR DATABASE WITH NEW KNOLEDGE VECTORS ######
+
+
+
