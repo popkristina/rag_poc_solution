@@ -71,3 +71,90 @@ def cosine_similarity(vec1, vec2):
     cosine_sim = dot_product / (norm_vec1 * norm_vec2)
 
     return cosine_sim
+
+
+def remove_html_anchors(text):
+    """
+    Remove HTML anchor tags from 
+    the markdown content.
+
+    Parameters
+    ----------
+    text: String
+        Original document in form of string
+
+    Returns
+    -------
+    String
+        Same string document without html
+    """
+    return re.sub(r'<a name="[^>]+"></a>', '', text)
+
+
+def normalize_text(text):
+    """
+    Convert text to lowercase and 
+    replace special characters.
+
+    Parameters
+    ----------
+    text: String
+        Document in form of string
+
+    Returns
+    -------
+    String
+        Normalized document in form of string
+    """
+    text = text.lower()
+    text = re.sub(r'\\\.', '.', text)
+    text = re.sub(r'\\\(', '(', text)
+    text = re.sub(r'\\\)', ')', text)
+    return text
+
+
+def split_text_by_tokens(text, max_tokens=256):
+    """
+    Accepts a text and splits it into chunks such
+    that each chunk will have the maximum number 
+    of word-like tokens accepted by the embedding 
+    model.
+
+    If the chunk length exceeds the maximum length
+    then the token is added to the next chunk.
+
+    Parameters
+    ----------
+    text: String
+        The preprocessed and normalized document
+    max_tokens: Integer
+        The maximum tokens accepted as sequence length
+        in the embedding model
+
+    Returns
+    -------
+    List:
+        A list of strings that represend the chunks
+        of the original text.
+    """
+    tokens = text.split()
+
+    # Initialize variables
+    chunks = []
+    current_chunk = []
+
+    for token in tokens:
+        # If adding this token exceeds the limit, save the current 
+        # chunk and tart a new one
+        if len(current_chunk) + 1 > max_tokens:
+            chunks.append(' '.join(current_chunk))
+            current_chunk = [token]
+        else:
+            current_chunk.append(token)
+
+    # Add the last chunk if there's remaining content
+    if current_chunk:
+        chunks.append(' '.join(current_chunk))
+
+    return chunks
+
