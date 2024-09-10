@@ -21,11 +21,11 @@ This solution should:
 
 ### 3. Technical Approach
 
-#### Data Ingestion: 
+#### **Data Ingestion:** 
 
 Manually upload and store the AWS documentation data in the project's file system for easy access and manipulation, and optionally, store it in an S3 bucket for quick access.
 
-#### Data Preprocessing:
+#### **Data Preprocessing:**
 
 #### Search and Retreival:
 
