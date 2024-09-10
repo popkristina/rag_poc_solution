@@ -17,12 +17,7 @@ This solution should:
 
 - Data: The POC will utilize a subset of the available AWS documentation, which is public and has no usage limitations.
 - Users: Initially implemented to access and test from one AWS account.
-- Functionality:
-
-    A search interface or chatbot where developers can input queries.
-    The system should provide accurate responses by retrieving relevant sections from the AWS documentation.
-    The system should minimize the need for developers to ask peers for simple queries.
-    (Optional) The system should suggest further reading materials or related documents.
+- Functionality: A pipeline that behaves as chatbot where a developer can input a query. The system should provide accurate responses by retrieving relevant sections from the AWS documentation and optionally, suggest further reading materials or related documents.
 
 ### 3. Technical Approach
 
