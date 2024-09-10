@@ -15,9 +15,9 @@ This solution should:
 
 ## 2. Scope of the POC
 
-- Data: The POC will utilize a subset of the available AWS documentation, which is public and has no usage limitations.
-- Users: Initially implemented to access and test from one AWS account.
-- Functionality: A pipeline that behaves as chatbot where a developer can input a query. The system should provide accurate responses by retrieving relevant sections from the AWS documentation and optionally, suggest further reading materials or related documents.
+- **Data**: The POC will utilize a subset of the available AWS documentation, which is public and has no usage limitations.
+- **Users**: Initially implemented to access and test from one AWS account.
+- **Functionality**: A pipeline that behaves as chatbot where a developer can input a query. The system should provide accurate responses by retrieving relevant sections from the AWS documentation and optionally, suggest further reading materials or related documents.
 
 ## 3. Technical Approach
 
@@ -33,10 +33,9 @@ Develop a search algorithm to retrieve the most relevant sections of the documen
 Implement a ranking mechanism to prioritize the most useful results.
 
 
-
 ## 4. Security and Compliance Considerations
 
-- For the POC: Since the data is public AWS documentation, there are no security or compliance concerns.
+Since the initial dataset is public AWS documentation, there are no security or compliance concerns to its usage.
 
 
 ## 5. Evaluation Criteria
@@ -63,7 +62,7 @@ User Feedback:
 
 ## 1. OBJECTIVE
 
-The objectives of the final system are the same as the one of the POC, except there should be another one included: Cost savings.
+The objectives of the final system are the same as the one of the POC, except there should be another one included: **Cost savings**.
 
 In order to achieve cost savings, the following should be true:
 
