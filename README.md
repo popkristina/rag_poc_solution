@@ -2,8 +2,8 @@
 
 This repository contains the code and ideation for a RAG solution that is intended for use by technical staff. The project is in a POC phase so it is not fully functional.
 
-## Proof of Concept
-### 1. Objective of the POC
+# Proof of Concept
+## 1. Objective of the POC
 
 This solution should:
 
@@ -13,31 +13,24 @@ This solution should:
 - (Extra) Suggest further reading material based on the query.
 
 
-### 2. Scope of the POC
+## 2. Scope of the POC
 
 - Data: The POC will utilize a subset of the available AWS documentation, which is public and has no usage limitations.
 - Users: Initially implemented to access and test from one AWS account.
 - Functionality: A pipeline that behaves as chatbot where a developer can input a query. The system should provide accurate responses by retrieving relevant sections from the AWS documentation and optionally, suggest further reading materials or related documents.
 
-### 3. Technical Approach
+## 3. Technical Approach
 
-#### **Data Ingestion:** 
+### Data Ingestion
 
 Manually upload and store the AWS documentation data in the project's file system for easy access and manipulation, and optionally, store it in an S3 bucket for quick access.
 
-#### **Data Preprocessing:**
+### Data Preprocessing
 
-#### Search and Retreival:
+### Search and Retreival
 
 Develop a search algorithm to retrieve the most relevant sections of the documentation based on the query.
 Implement a ranking mechanism to prioritize the most useful results.
-
-
-Natural Language Processing (NLP):
-
-    Implement NLP models to understand and process developer queries.
-    Use pre-trained models like BERT or GPT for semantic search and context understanding.
-
 
 
 
