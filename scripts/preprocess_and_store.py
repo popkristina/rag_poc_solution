@@ -1,20 +1,48 @@
+# Note: This script is intended to show how the process would
+# look like and is not indended to run at this point
+
 import pandas as pd
 import argparse
 import boto3
 import json
+from utils import *
+from io import StringIO  
 
 ###################### ARGUMENT PARSER #######################
 
-parser = argparse.ArgumentParser(description='Inputs for script.')
-parser.add_argument('--new_data', dest='new_docs_path',
-                    help='sum the integers (default: find the max)')
 
+"""
+In case we want to update the knowledge base with fresh documents,
+we give a path to where the new documents are. 
+We also give a path to where we want to store  the preprocessed
+and chunked files.
+"""
+parser = argparse.ArgumentParser()
+parser.add_argument("--input-data", type=str, dest='data_update', 
+                    help='data to update the knowledge base with')
+parser.add_argument('--output', type=str, dest='prepped_data')
 args = parser.parse_args()
-print(args.accumulate(args.integers))
 
 
-######## READ NEW DATA TO UPDATE VECTOR DATABASE WITH ########
+######## READ NEW DATA TO UPDATE VECTOR DATABASE WITH #########
 
+new_files_path = args.data_update
+
+# TODO: Implement additional file format checks in case 
+# not all documents are .md format
+md_files = glob.glob(os.path.join(new_files_path, '*.md'))
+df = read_glob_files(md_files)
+
+# Upload data to S3 bucket 
+# Not tested if this will work
+
+csv_buffer = StringIO()
+df.to_csv(csv_buffer, index=False)
+
+s3_resource = boto3.resource('s3')
+s3_resource.Object(
+    'sagemaker-studio-863518450685-ozz0puftsu9', 
+    'data/new_raw_documents/documents.csv').put(Body=csv_buffer.getvalue())
 
 
 ################ TURN NEW DATA INTO VECTORS ##################
@@ -26,6 +54,9 @@ sagemaker_runtime = boto3.client('runtime.sagemaker')
 
 
 def get_embeddings(text):
+    # TODO: Move this function to utils with all
+    # other functionalities
+    
     response = sagemaker_runtime.invoke_endpoint(
         EndpointName='your-endpoint-name',
         ContentType='application/json',

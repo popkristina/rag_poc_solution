@@ -158,3 +158,30 @@ def split_text_by_tokens(text, max_tokens=256):
 
     return chunks
 
+
+def read_glob_files(md_files):
+    """
+    Accepta a list of files retreived by 
+    glob. 
+
+    Parameters
+    ----------
+    md_files: List
+        A list of 
+        
+    Returns
+    -------
+    pd.DataFrame
+        A dataframe of documents
+    """
+    data = []
+    for file in md_files:
+        with open(file, 'r', encoding='utf-8') as f:
+            content = f.read()
+            doc_name = os.path.splitext(os.path.basename(file))[0]  
+            data.append({'id': doc_name, 'text': content})
+
+    # Convert the list to a DataFrame
+    df = pd.DataFrame(data)
+    return df
+
