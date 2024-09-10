@@ -66,6 +66,21 @@ User Feedback:
 
 # DEMO Usage
 
+## 1. Project Structure
+
+loka_rag_solution/
+├── data/
+│   └── raw/
+│   └── preprocessed/
+├── notebooks/
+├── scripts/
+│   ├── 
+│   ├── preprocessing.py
+│   └── model_training.py
+├── Dockerfile
+├── requirements.txt
+├── config.py
+└── README.md
 
 # Final System Requirements
 
