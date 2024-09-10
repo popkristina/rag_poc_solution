@@ -41,7 +41,7 @@ path_vector_database = 'data/vector_embeddings.csv'
 sagemaker_runtime = boto3.client('runtime.sagemaker')
 
 
-#  DEFINE FUNCTIONS ###############################################
+#  DEFINE FUNCTIONS ################################################
 
 
 def get_embeddings(text):
@@ -66,7 +66,7 @@ parser.add_argument('--output', type=str, dest='prepped_data')
 args = parser.parse_args()
 
 
-# READ NEW DATA TO UPDATE VECTOR DATABASE WITH ###################
+# READ NEW DATA TO UPDATE VECTOR DATABASE WITH ####################
 
 
 new_files_path = args.data_update
@@ -91,7 +91,7 @@ s3_resource.Object(
 ).put(Body=csv_buffer.getvalue())
 
 
-# TURN NEW DATA INTO VECTORS ##################################
+# TURN NEW DATA INTO VECTORS ####################################
 
 
 # Preprocess, normalize and chunk data first
@@ -121,7 +121,7 @@ for index, row in transformed_df.iterrows():
 transformed_df['embeddings'] = encoded_texts
 
 
-# CONNECTION TO EXISTING VECTOR DATABASE ####################
+# CONNECTION TO EXISTING VECTOR DATABASE ########################
 
 
 # No database in poc, just open file from S3 location
@@ -131,7 +131,7 @@ vector_database = vector_res_object['Body'].read().decode('utf-8')
 vector_df = pd.read_csv(StringIO(vector_database))
 
 
-# UPDATE VECTOR DATABASE WITH NEW KNOWLEDGE VECTORS #########
+# UPDATE VECTOR DATABASE WITH NEW KNOWLEDGE VECTORS #############
 
 vector_df = pd.concat([vector_df, transformed_df], 
                       ignore_index=True)
