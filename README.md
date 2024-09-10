@@ -69,7 +69,11 @@ User Feedback:
 - Internal Documentation: Extend the system to include Company X's internal documentation while ensuring compliance with security and geographical restrictions.
 - Advanced Features: Implement the nice-to-have features, such as advanced recommendations and contextual understanding, to further enhance the system.
 
-
 # DEMO Usage
 
 
+# Final System Requirements
+
+### 1. Objective
+
+The objective of the final system is the same as the one of the POC, except 
