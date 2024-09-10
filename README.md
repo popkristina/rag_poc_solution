@@ -25,8 +25,17 @@ This solution should:
 
 Manually upload and store the AWS documentation data in the project's file system for easy access and manipulation, and optionally, store it in an S3 bucket for quick access.
 
+### Storage
+
+File system and optionally, S3 bucket storage for knowledge data in vector format.
+
 ### Data Preprocessing
 
+- **Text Cleaning**: Clean text from HTML-like elements, as well as those indicating images.
+- **Text Normalization**: Normalize special characters that show up typucally in .md files.
+- **Text Chunking**: Chunking is performed so that each chunk of text will fit the maximum number of tokens that the embedding model accepts. In this proposed solution, it is 256 tokens. The leftovers from every document are added to a next chunk.
+
+###   
 ### Search and Retreival
 
 Develop a search algorithm to retrieve the most relevant sections of the documentation based on the query.
@@ -50,10 +59,10 @@ User Feedback:
 
     Gather feedback from the team to refine the system before broader deployment.
 
-## 6. Future Considerations
+## 6. Limitations of POC
 
-- Internal Documentation: Extend the system to include Company X's internal documentation while ensuring compliance with security and geographical restrictions.
-- Advanced Features: Implement the nice-to-have features, such as advanced recommendations and contextual understanding, to further enhance the system.
+- Does not have a trigger of when the public documentation is updated. Updating of knowledge base with vectors should be invoked manually through a notebook.
+- Does have a vector embedding model deployed on Sagemaker to avoid incurring additional costs.
 
 # DEMO Usage
 

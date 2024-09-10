@@ -25,6 +25,7 @@ from io import StringIO
 
 #  DEFINE GLOBAL VARIABLES #########################################
 
+
 # Get current date
 upld_date = datetime.today().strftime("%m%d%Y")
 
@@ -34,9 +35,25 @@ bucket_name = 'sagemaker-studio-863518450685-ozz0puftsu9'
 
 # Abritrary that would be created within bucket
 preprocessed_path_s3 = f'data/new_raw_documents/docs_{upld_date}.csv'
+path_vector_database = 'data/vector_embeddings.csv'
 
 # Initialize the SageMaker runtime client
 sagemaker_runtime = boto3.client('runtime.sagemaker')
+
+
+#  DEFINE FUNCTIONS ###############################################
+
+
+def get_embeddings(text):
+    # TODO: Deploy before using this function
+
+    response = sagemaker_runtime.invoke_endpoint(
+        EndpointName='endpoint-for-all-MiniLM-L6-v2e',
+        ContentType='application/json',
+        Body=json.dumps({"text": text})
+    )
+    result = json.loads(response['Body'].read().decode())
+    return result
 
 
 # ARGUMENT PARSER #################################################
@@ -77,44 +94,57 @@ s3_resource.Object(
 # TURN NEW DATA INTO VECTORS ##################################
 
 
-# Preprocess first
-html_removed_texts = df.apply(
-    lambda row: (
-        row['id'],
-        remove_html_anchors(row['text'])), axis=1).tolist()
+# Preprocess, normalize and chunk data first
+processed_data = []
 
-normalized_texts = [
-    (item[0], normalize_text(item[1])) for item in html_removed_texts]
+for index, row in df.iterrows():
+    doc_id = row['id']
+    text = row['text']
 
+    cleaned_text = normalize_text(remove_html_anchors(text))
+    chunks = split_text_by_tokens(cleaned_text)
 
-# TODO: Actually deploy model to make this piece of code work
+    for chunk in chunks:
+        processed_data.append({'doc_id': doc_id, 'text': chunk})
 
+transformed_df = pd.DataFrame(processed_data)
+transformed_df.insert(0, 'id', range(len(transformed_df)))
 
-def get_embeddings(text):
-    # TODO: Move this function to utils with all
-    # other functionalities
-
-    response = sagemaker_runtime.invoke_endpoint(
-        EndpointName='your-endpoint-name',
-        ContentType='application/json',
-        Body=json.dumps({"text": text})
-    )
-    result = json.loads(response['Body'].read().decode())
-    return result
-    
-
-# Example usage
-text = "Your sample text here"
-embeddings = get_embeddings(text)
-print(embeddings)
+# And now encode texts
+# Note: The code should use a deployed version of all-MiniLM-L6-v2
+#       model which is available to deploy through JumpStart and
+#       compatible with the SentenceTransformer wrapped function
+#       for all-MiniLM-L6-v2 run through the notebook
+encoded_texts = []
+for index, row in transformed_df.iterrows():
+    encoded_texts.append(get_embeddings(row['text']))
+transformed_df['embeddings'] = encoded_texts
 
 
-########## CONNECTION TO EXISTING VECTOR DATABASE ############
+# CONNECTION TO EXISTING VECTOR DATABASE ####################
 
 
+# No database in poc, just open file from S3 location
+vector_res_object = s3_resource.get_object(
+    Bucket=bucket_name, Key=path_vector_database)
+vector_database = vector_res_object['Body'].read().decode('utf-8')
+vector_df = pd.read_csv(StringIO(vector_database))
 
 
-###### UPDATE VECTOR DATABASE WITH NEW KNOWLEDGE VECTORS ######
+# UPDATE VECTOR DATABASE WITH NEW KNOWLEDGE VECTORS #########
 
+vector_df = pd.concat([vector_df, transformed_df], 
+                      ignore_index=True)
+
+# We can additionally clean the dabatase of duplicates depending
+#  on whether the system logic requires it
+
+# Now save the final dataframe back again
+csv_buffer = StringIO()
+vector_df.to_csv(csv_buffer, index=False)
+
+s3_resource.Object(
+    bucket_name, path_vector_database
+).put(Body=csv_buffer.getvalue())
 
 
