@@ -2,7 +2,8 @@
 
 This repository contains the code and ideation for a RAG solution that is intended for use by technical staff. The project is in a POC phase so it is not fully functional.
 
-## 1. Objective of the POC
+## Proof of Concept
+### 1. Objective of the POC
 
 This solution should:
 
@@ -12,10 +13,10 @@ This solution should:
 - (Extra) Suggest further reading material based on the query.
 
 
-## 2. Scope of the POC
+### 2. Scope of the POC
 
 - Data: The POC will utilize a subset of the available AWS documentation, which is public and has no usage limitations.
-- Users: The POC will initially be implemented for one development team within Company X.
+- Users: Initially implemented to access and test from one AWS account.
 - Functionality:
 
     A search interface or chatbot where developers can input queries.
@@ -23,7 +24,7 @@ This solution should:
     The system should minimize the need for developers to ask peers for simple queries.
     (Optional) The system should suggest further reading materials or related documents.
 
-## 3. Technical Approach
+### 3. Technical Approach
 
 Data Ingestion:
 
@@ -80,6 +81,6 @@ The objectives of the final system are the same as the one of the POC, except th
 
 In order to achieve cost savings, the following should be true:
 
-    $$ Cost(hours of labor to develop solution) + Cost(hours of labor to maintain solution) + Cost(API calls to LLM on AWS) + Cost(Storage) < Cost(hours of labor in searching through documentation instead of working on other profitable projects)$$
+$$ Cost(hours of labor to develop solution) + Cost(hours of labor to maintain solution) + Cost(API calls to LLM on AWS) + Cost(Storage) < Cost(hours of labor in searching through documentation instead of working on other profitable projects)$$
 
 ## 2. 
