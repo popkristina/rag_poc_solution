@@ -78,8 +78,8 @@ User Feedback:
 
 The objectives of the final system are the same as the one of the POC, except there should be another one included: Cost savings.
 
-In order to achieve cost savings, the following should be true:
+**In order to achieve cost savings, the following should be true:**
 
-    Cost(hours of labor to develop solution) + Cost(hours of labor to maintain solution) + Cost(API calls to LLM on AWS) + Cost(Storage) < Cost(hours of labor in searching through documentation instead of working on other profitable projects)
+$$ Cost(hours of labor to develop solution) + Cost(hours of labor to maintain solution) + Cost(API calls to LLM on AWS) + Cost(Storage) \le Cost(hours of labor in searching through documentation instead of working on other profitable projects)$$
 
 ## 2. 
