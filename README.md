@@ -4,12 +4,12 @@ This repository contains the code and ideation for a RAG solution that is intend
 
 ## 1. Objective of the POC
 
-The primary objective of the POC is to demonstrate that the tool can:
+This solution should:
 
-    - Significantly reduce the time developers spend searching through documentation.
-    - Provide accurate and up-to-date responses to developer queries.
-    - Assist developers who are unfamiliar with certain parts of the documentation.
-    - (Optional) Suggest further reading material based on the query.
+- Reduce time developers spend in documentation browsing.
+- Provide accurate and up-to-date responses to developer queries.
+- Assist developers who are unfamiliar with certain parts of the documentation.
+- (Extra) Suggest further reading material based on the query.
 
 
 ## 2. Scope of the POC
