@@ -1,5 +1,7 @@
 import re
 import numpy as np
+import pandas as pd
+import os
 
 
 def extract_relevant_sections(text):
@@ -161,14 +163,15 @@ def split_text_by_tokens(text, max_tokens=256):
 
 def read_glob_files(md_files):
     """
-    Accepta a list of files retreived by 
-    glob. 
+    Accepta a list of files retreived by
+    glob.
 
     Parameters
     ----------
     md_files: List
-        A list of 
-        
+        A list of paths to every document
+        in the input folder.
+
     Returns
     -------
     pd.DataFrame
@@ -178,10 +181,12 @@ def read_glob_files(md_files):
     for file in md_files:
         with open(file, 'r', encoding='utf-8') as f:
             content = f.read()
-            doc_name = os.path.splitext(os.path.basename(file))[0]  
+            doc_name = os.path.splitext(os.path.basename(file))[0]
             data.append({'id': doc_name, 'text': content})
 
-    # Convert the list to a DataFrame
     df = pd.DataFrame(data)
     return df
+
+
+
 

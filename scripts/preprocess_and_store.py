@@ -18,19 +18,22 @@ import boto3
 import json
 import os
 import glob
+from datetime import datetime
 from utils import *
 from io import StringIO
 
 
 #  DEFINE GLOBAL VARIABLES #########################################
 
+# Get current date
+upld_date = datetime.today().strftime("%m%d%Y")
 
 # Necessary vars for s3 bucket connection
 s3_resource = boto3.resource('s3')
 bucket_name = 'sagemaker-studio-863518450685-ozz0puftsu9'
 
 # Abritrary that would be created within bucket
-preprocessed_path_s3 = 'data/new_raw_documents/documents.csv'
+preprocessed_path_s3 = f'data/new_raw_documents/docs_{upld_date}.csv'
 
 # Initialize the SageMaker runtime client
 sagemaker_runtime = boto3.client('runtime.sagemaker')
@@ -61,6 +64,8 @@ md_files = glob.glob(os.path.join(new_files_path, '*.md'))
 df = read_glob_files(md_files)
 
 # Uploads data to S3 bucket (Not tested if this will work)
+# This uploads prior to preprocessing, but uploads new
+#      data as one file easier to access.
 csv_buffer = StringIO()
 df.to_csv(csv_buffer, index=False)
 
@@ -70,6 +75,16 @@ s3_resource.Object(
 
 
 # TURN NEW DATA INTO VECTORS ##################################
+
+
+# Preprocess first
+html_removed_texts = df.apply(
+    lambda row: (
+        row['id'],
+        remove_html_anchors(row['text'])), axis=1).tolist()
+
+normalized_texts = [
+    (item[0], normalize_text(item[1])) for item in html_removed_texts]
 
 
 # TODO: Actually deploy model to make this piece of code work
@@ -86,6 +101,7 @@ def get_embeddings(text):
     )
     result = json.loads(response['Body'].read().decode())
     return result
+    
 
 # Example usage
 text = "Your sample text here"
@@ -98,7 +114,7 @@ print(embeddings)
 
 
 
-###### UPDATE VECTOR DATABASE WITH NEW KNOLEDGE VECTORS ######
+###### UPDATE VECTOR DATABASE WITH NEW KNOWLEDGE VECTORS ######
 
 
 
