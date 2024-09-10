@@ -21,32 +21,30 @@ This solution should:
 
 ### 3. Technical Approach
 
-Data Ingestion:
+#### Data Ingestion: 
 
-    Crawl and index the subset of AWS documentation relevant to the team's work.
+Manually upload and store the AWS documentation data in the project's file system for easy access and manipulation, and optionally, store it in an S3 bucket for quick access.
+
+#### Data Preprocessing:
+
+#### Search and Retreival:
+
+Develop a search algorithm to retrieve the most relevant sections of the documentation based on the query.
+Implement a ranking mechanism to prioritize the most useful results.
+
 
 Natural Language Processing (NLP):
 
     Implement NLP models to understand and process developer queries.
     Use pre-trained models like BERT or GPT for semantic search and context understanding.
 
-Search Algorithm:
 
-    Develop a search algorithm to retrieve the most relevant sections of the documentation based on the query.
-    Implement a ranking mechanism to prioritize the most useful results.
 
-(Optional) Recommendation System:
-
-    Implement a simple recommendation engine that suggests related documents or sections for further reading.
 
 ## 4. Security and Compliance Considerations
 
 - For the POC: Since the data is public AWS documentation, there are no security or compliance concerns.
-- For the final system:
 
-    Implement access controls and encryption to protect sensitive internal documentation.
-    Ensure compliance with geographical restrictions (e.g., data must not leave the US).
-    Implement role-based access to ensure that only authorized users can access proprietary information.
 
 ## 5. Evaluation Criteria
 
@@ -79,3 +77,16 @@ In order to achieve cost savings, the following should be true:
 $$ Cost(hours of labor to develop solution) + Cost(hours of labor to maintain solution) + Cost(API calls to LLM on AWS) + Cost(Storage) < Cost(hours of labor in searching through documentation instead of working on other profitable projects)$$
 
 ## 2. 
+
+Security
+
+- For the final system:
+
+    Implement access controls and encryption to protect sensitive internal documentation.
+    Ensure compliance with geographical restrictions (e.g., data must not leave the US).
+    Implement role-based access to ensure that only authorized users can access proprietary information.
+
+
+  (Optional) Recommendation System:
+
+    Implement a simple recommendation engine that suggests related documents or sections for further reading.
