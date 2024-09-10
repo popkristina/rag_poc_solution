@@ -82,6 +82,18 @@ def find_top_5_similar_docs(query_vector, doc_vectors_df):
     return top_5_texts, top_5_similarities
 
 
+def get_embeddings(text):
+    # TODO: Deploy before using this function
+
+    response = sagemaker_runtime.invoke_endpoint(
+        EndpointName='endpoint-for-all-MiniLM-L6-v2e',
+        ContentType='application/json',
+        Body=json.dumps({"text": text})
+    )
+    result = json.loads(response['Body'].read().decode())
+    return result
+
+
 # ARGUMENT PARSER ##################################################
 
 
@@ -106,5 +118,6 @@ vector_df = pd.read_csv(StringIO(vector_database))
 
 
 query = args.user_query
+embedded_query = get_embeddings(query)
 top_5_texts, _ = find_top_5_similar_docs(query, vector_df)
 
