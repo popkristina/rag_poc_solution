@@ -75,9 +75,10 @@ User Feedback:
     │   └── preprocessed/
     ├── notebooks/
     ├── scripts/
-    │   ├── 
-    │   ├── preprocessing.py
-    │   └── model_training.py
+    │   ├── utils.py
+    │   ├── preprocess_and_store.py
+    │   ├── search_and_retreive.py
+    │   └── search_and_retreive.py
     ├── Dockerfile
     ├── requirements.txt
     ├── config.py
