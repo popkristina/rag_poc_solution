@@ -41,6 +41,9 @@ File system and optionally, S3 bucket storage for knowledge data in vector forma
 Develop a search algorithm to retrieve the most relevant sections of the documentation based on the query.
 Implement a ranking mechanism to prioritize the most useful results.
 
+### Model Choice 
+
+
 
 ## 4. Security and Compliance Considerations
 
@@ -75,13 +78,12 @@ User Feedback:
     │   └── preprocessed/
     ├── notebooks/
     ├── scripts/
-    │   ├── utils.py
-    │   ├── preprocess_and_store.py
-    │   ├── search_and_retreive.py
-    │   └── search_and_retreive.py
-    ├── Dockerfile
+    │   ├── utils.py                    # contains helper functions for data manipulation
+    │   ├── preprocess_and_store.py     # updates vector knowledge base with new data
+    │   ├── search_and_retreive.py      # looks up most similar vectors to a query vector
+    │   └── rag_inference.py            # collects all relevant input and sends to llm 
     ├── requirements.txt
-    ├── config.py
+    ├── pipeline.py
     └── README.md
 
 # Final System Requirements
