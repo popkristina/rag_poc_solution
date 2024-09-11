@@ -39,17 +39,13 @@ File system and optionally, S3 bucket storage for knowledge data in vector forma
 
 | Functionality | Model | Model Description |
 | ---         |     ---    |          --- |
-| git status   | all-miniLM-L6-v2     | git status    |
-| git diff     | gpt2     | git diff      |
+| Document embedding   | all-miniLM-L6-v2     |   |
+| Text generation    | falcon-40B-instruct     |       |
 
 ### Search and Retreival
 
-Develop a search algorithm to retrieve the most relevant sections of the documentation based on the query.
-Implement a ranking mechanism to prioritize the most useful results.
-
+Use the same document embedding model to embed both a user query and a repository of documents. The solution iterates through every document in vector format and calculates its cosine similarity to the query in vector format. Finally, the solution retreives the top 5 documents with the highest score.
  
-
-
 
 ## 4. Security and Compliance Considerations
 
@@ -58,20 +54,13 @@ Since the initial dataset is public AWS documentation, there are no security or 
 
 ## 5. Evaluation Criteria
 
-Success Metrics:
 
-    Reduction in time spent searching for documentation (measured through developer feedback or time-tracking).
-    Accuracy of the system in retrieving relevant documentation.
-    Reduction in the number of questions developers ask their peers.
-
-User Feedback:
-
-    Gather feedback from the team to refine the system before broader deployment.
 
 ## 6. Limitations of POC
 
-- Does not have a trigger of when the public documentation is updated. Updating of knowledge base with vectors should be invoked manually through a notebook.
-- Does have a vector embedding model deployed on Sagemaker to avoid incurring additional costs.
+- Models used for embedding and text generation are not deployed as this is limited through SageMaker free trial. The pipeline process only has placeholder functions as to how the endpoints would be invoked, were the models deployed.
+- Does not have a trigger of when the public documentation is updated. Updating of knowledge base with vectors should be invoked manually through a notebook or console.
+- Does not have a vector database included
 
 # DEMO Usage
 
@@ -83,11 +72,15 @@ User Feedback:
     │   └── raw/
     │   └── preprocessed/
     ├── notebooks/
+    |   ├── 01_practice_embed_doc2vec.ipynb           # Practice to warm up to document embeddings
+    │   ├── 02_experiment_embedding_models.ipynb      # The embedding of 
+    │   ├── 03_experiment_langchain.ipynb             # Getting familiar with langchain 
+    │   └── 04_experiment_foundation_model.ipynb      # 
     ├── scripts/
-    │   ├── utils.py                    # contains helper functions for data manipulation
-    │   ├── preprocess_and_store.py     # updates vector knowledge base with new data
-    │   ├── search_and_retreive.py      # looks up most similar vectors to a query vector
-    │   └── rag_inference.py            # collects all relevant input and sends to llm 
+    │   ├── utils.py                                  # contains helper functions for data manipulation
+    │   ├── preprocess_and_store.py                   # updates vector knowledge base with new data
+    │   ├── search_and_retreive.py                    # looks up most similar vectors to a query vector
+    │   └── rag_inference.py                          # collects all relevant input and sends to llm 
     ├── requirements.txt
     ├── pipeline.py
     └── README.md
@@ -100,19 +93,15 @@ The objectives of the final system are the same as the one of the POC, except th
 
 In order to achieve cost savings, the following should be true:
 
-$$ Cost(hours of labor to develop solution) + Cost(hours of labor to maintain solution) + Cost(API calls to LLM on AWS) + Cost(Storage) < Cost(hours of labor in searching through documentation instead of working on other profitable projects)$$
+$$ Cost(hours_of_labor_to_develop-solution) + Cost(hours_of_labor_to_maintain_solution) + Cost(API_calls_to_LLM_on_AWS) + Cost(Storage) < Cost(hours_of_labor_in_searching_through_documentation_instead_of_working_on_other_profitable_projects)$$
 
-## 2. 
+## 2. Other functionalities 
 
-Security
+## 3. Security
 
-- For the final system:
-
-    Implement access controls and encryption to protect sensitive internal documentation.
-    Ensure compliance with geographical restrictions (e.g., data must not leave the US).
-    Implement role-based access to ensure that only authorized users can access proprietary information.
+Implement access controls and encryption to protect sensitive internal documentation. Change the domains registered to US location. Also, role-based access should be set up.
 
 
-  (Optional) Recommendation System:
+## 4. Interface - Recommendation System:
 
-    Implement a simple recommendation engine that suggests related documents or sections for further reading.
+Implement a simple recommendation engine that suggests related documents or sections for further reading.
