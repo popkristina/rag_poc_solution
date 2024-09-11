@@ -1,4 +1,3 @@
-import sagemaker
 from sagemaker.workflow.pipeline import Pipeline
 from sagemaker.workflow.steps import ProcessingStep
 from sagemaker.workflow.parameters import ParameterString
@@ -54,11 +53,17 @@ inputs the original query and the most similar
 documents, concatenates them and sends them to
 the LLM, then it outputs the answer to the query.
 """
+step2_output = ProcessingOutput(
+    output_name="step2_output", 
+    source="/opt/ml/processing/output")
+
 step2 = ProcessingStep(
     name="Add context to query and generate output",
     processor=steps_processor,
-    inputs=[step1_output],
-    outputs=[],
+    inputs=[ProcessingInput(
+        source=step1.properties.ProcessingOutputConfig.Outputs["step1_output"].S3Output.S3Uri,
+        destination="/opt/ml/processing/input"],
+    outputs=[step2_output],
     code="scripts/rag_inference.py",
     job_arguments=[
         "--input_string", input_query,
@@ -67,12 +72,13 @@ step2 = ProcessingStep(
 
 # Define the pipeline
 pipeline = Pipeline(
-    name="MyPipeline",
+    name="final_pipeline",
     parameters=[input_query],
     steps=[step1, step2]
 )
 
 if __name__ == "__main__":
     pipeline.upsert(role_arn=ROLE_ARN)
-    execution = pipeline.start(parameters={"InputQuery": "How are you today?"})
+    execution = pipeline.start(parameters={
+        "InputQuery": "Help me deploy a model for the first time"})
     execution.wait()

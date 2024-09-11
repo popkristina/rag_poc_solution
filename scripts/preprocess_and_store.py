@@ -56,7 +56,7 @@ def get_embeddings(text):
     return result
 
 
-# ARGUMENT PARSER #################################################
+# ARGUMENT PARSER ##################################################
 
 
 parser = argparse.ArgumentParser()
@@ -133,7 +133,7 @@ vector_df = pd.read_csv(StringIO(vector_database))
 
 # UPDATE VECTOR DATABASE WITH NEW KNOWLEDGE VECTORS #############
 
-vector_df = pd.concat([vector_df, transformed_df], 
+vector_df = pd.concat([vector_df, transformed_df],
                       ignore_index=True)
 
 # We can additionally clean the dabatase of duplicates depending
