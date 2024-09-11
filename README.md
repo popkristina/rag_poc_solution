@@ -38,9 +38,9 @@ File system and optionally, S3 bucket storage for knowledge data in vector forma
 ### Model Choice
 
 | Functionality | Model | Model Description |
-| :---         |     :---:      |          ---: |
-| git status   | git status     | git status    |
-| git diff     | git diff       | git diff      |
+| ---         |     ---    |          --- |
+| git status   | all-miniLM-L6-v2     | git status    |
+| git diff     | gpt2     | git diff      |
 
 ### Search and Retreival
 
