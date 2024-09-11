@@ -35,13 +35,19 @@ File system and optionally, S3 bucket storage for knowledge data in vector forma
 - **Text Normalization**: Normalize special characters that show up typucally in .md files.
 - **Text Chunking**: Chunking is performed so that each chunk of text will fit the maximum number of tokens that the embedding model accepts. In this proposed solution, it is 256 tokens. The leftovers from every document are added to a next chunk.
 
-###   
+### Model Choice
+
+| Functionality | Model | Model Description |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+
 ### Search and Retreival
 
 Develop a search algorithm to retrieve the most relevant sections of the documentation based on the query.
 Implement a ranking mechanism to prioritize the most useful results.
 
-### Model Choice 
+ 
 
 
 
